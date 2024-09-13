@@ -4,14 +4,20 @@
 	"description": "Vite + Module Federation is now possible",
 	"main": "index.js",
 	"scripts": {
-		"install:deps": "npm --prefix ./host install && npm --prefix ./remote install",
-		"postinstall:deps": "npm --prefix ./host run build && npm --prefix ./remote run build",
+		"install:deps": "npm --prefix ./host install && npm --prefix ./remote install && npm --prefix ./remote2 install && npm --prefix ./remote4 install",
+		"postinstall:deps": "npm --prefix ./host run build && npm --prefix ./remote run build && npm --prefix ./remote2 run build && npm --prefix ./remote4 run build",
 		"serve:host": "npm --prefix ./host run dev",
 		"serve:remote": "npm --prefix ./remote run dev",
+		"serve:remote2": "npm --prefix ./remote2 run dev",
+		"serve:remote4": "npm --prefix ./remote4 run dev",
 		"build:host": "npm --prefix ./host run build",
 		"build:remote": "npm --prefix ./remote run build",
+		"build:remote2": "npm --prefix ./remote2 run build",
+		"build:remote4": "npm --prefix ./remote4 run build",
 		"preview:host": "npm --prefix ./host run preview",
-		"preview:remote": "npm --prefix ./remote run preview"
+		"preview:remote": "npm --prefix ./remote run preview",
+		"preview:remote2": "npm --prefix ./remote2 run preview",
+		"preview:remote4": "npm --prefix ./remote4 run preview"
 	},
 	"author": {
 		"name": "Giorgio Boa",

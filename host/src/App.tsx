@@ -9,6 +9,12 @@ export default () => {
 		async () => await loadRemoteModule('remote', './remote-app')
 	);
 
+	
+
+	const Remote4 = React.lazy(
+		async () => await loadRemoteModule('remote4', './remote-app4')
+	);
+
 	React.useEffect(() => {
 		of('emit')
 			.pipe(tap(() => console.log("I'm RxJs from host")))
@@ -38,9 +44,16 @@ export default () => {
 					<div className='title'>I'm the host app</div>
 					<Counter />
 					<div/>
+
 					<React.Suspense fallback='loading...'>
-				<Remote />
-			   </React.Suspense>
+				       <Remote />
+			        </React.Suspense>
+
+					
+
+					<React.Suspense fallback='loading...'>
+					<Remote4 />
+			        </React.Suspense>
 				</div>
 			</div>
 
