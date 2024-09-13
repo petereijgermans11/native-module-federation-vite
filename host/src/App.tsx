@@ -8,9 +8,7 @@ export default () => {
 	const Remote = React.lazy(
 		async () => await loadRemoteModule('remote', './remote-app')
 	);
-
 	
-
 	const Remote4 = React.lazy(
 		async () => await loadRemoteModule('remote4', './remote-app4')
 	);

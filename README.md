@@ -102,3 +102,32 @@ export default defineConfig(async ({ command }) => ({
 11 change all contents of App.tsx
 
 
+## Change Host
+
+Add your new Remote aap to the main.tsx in your Host - app
+
+~~~
+import { initFederation } from '@softarc/native-federation';
+
+(async () => {
+	await initFederation({
+		remote: 'http://localhost:4174/remoteEntry.json',
+		remote4: 'http://localhost:4175/remoteEntry.json',
+	});
+
+	await import('./bootstrap');
+})();
+~~~
+
+load your RemoteModule in tje App.tsx
+
+~~~
+export default () => {
+	const Remote = React.lazy(
+		async () => await loadRemoteModule('remote', './remote-app')
+	);
+
+~~~
+
+Change your build-scripts in your package.json
+
