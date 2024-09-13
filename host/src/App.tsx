@@ -37,12 +37,15 @@ export default () => {
 					</div>
 					<div className='title'>I'm the host app</div>
 					<Counter />
+					<div/>
+					<React.Suspense fallback='loading...'>
+				<Remote />
+			   </React.Suspense>
 				</div>
 			</div>
 
-			<React.Suspense fallback='loading...'>
-				<Remote />
-			</React.Suspense>
+			
+			
 		</>
 	);
 };
