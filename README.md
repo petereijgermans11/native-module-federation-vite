@@ -17,11 +17,11 @@ Open your browser at http://localhost:4173/ to see the amazing result
 ## Adding a new Remote
 
 1. npm create vite@latest     //-->  !!! Choose React and TypeScript !!!
-2. cd remote2
+2. cd remote4
 3. npm i @module-federation/vite  -save-dev
 4. npm i @softarc/native-federation -save-dev
 5. npm i @softarc/native-federation-esbuild -save-dev
-6. Change the contents of src/main.tsx:
+6. Change the contents of src/main.tsx for bootstrapping the app:
 
 ~~~
 import { initFederation } from '@softarc/native-federation';
@@ -30,10 +30,11 @@ import { initFederation } from '@softarc/native-federation';
   await initFederation();
   await import('./bootstrap');
 })();
-
 ~~~
-7. Create src/bootstrap.tsx
 
+
+7. Create src/bootstrap.tsx
+~~~
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App.tsx'
@@ -51,9 +52,9 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
 const { withNativeFederation, shareAll } = require('@softarc/native-federation/build');
 
 module.exports = withNativeFederation({
-	name: 'remote2',
+	name: 'remote4',
 	exposes: {
-		'./remote-app2': './src/App.tsx',
+		'./remote-app4': './src/App.tsx',
 	},
 	shared: shareAll(),
 	skip: ['react-dom/server', 'react-dom/server.node', 'vite-react-microfrontends'],
@@ -97,15 +98,31 @@ export default defineConfig(async ({ command }) => ({
 }));
 ~~~
 
-10. Change the package.json in the root of the project for building en preview the App
+10. Change the package.json in the root of the project for building en preview the new App
+
+~~~
+"scripts": {
+		"install:deps": "npm --prefix ./host install && npm --prefix ./remote install && npm --prefix ./remote4 install",
+		"postinstall:deps": "npm --prefix ./host run build && npm --prefix ./remote run build && npm --prefix ./remote4 run build",
+		"serve:host": "npm --prefix ./host run dev",
+		"serve:remote": "npm --prefix ./remote run dev",
+		"serve:remote4": "npm --prefix ./remote4 run dev",
+		"build:host": "npm --prefix ./host run build",
+		"build:remote": "npm --prefix ./remote run build",
+		"build:remote4": "npm --prefix ./remote4 run build",
+		"preview:host": "npm --prefix ./host run preview",
+		"preview:remote": "npm --prefix ./remote run preview",
+		"preview:remote4": "npm --prefix ./remote4 run preview"
+	},
+~~~
 
 
-11 change all contents of App.tsx
+11. change all contents of App.tsx
 
 
 ## Change Host
 
-Add your new Remote aap to the main.tsx in your Host - app
+Add your new Remote app to the main.tsx in your Host - app
 
 ~~~
 import { initFederation } from '@softarc/native-federation';
@@ -125,7 +142,7 @@ load your RemoteModule in tje App.tsx
 ~~~
 export default () => {
 	const Remote = React.lazy(
-		async () => await loadRemoteModule('remote', './remote-app')
+		async () => await loadRemoteModule('remote4', './remote-app4')
 	);
 
 ~~~
