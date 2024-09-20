@@ -2,7 +2,7 @@
 
 ## Getting started
 
-From this directory execute:
+From this root directory execute:
 
 - npm run install:deps
 - npm run preview:remote
