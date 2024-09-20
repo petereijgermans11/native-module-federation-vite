@@ -14,7 +14,7 @@ Open your browser at http://localhost:4173/ to see the amazing result
 ![screenshot](docs/screenshot.png)
 
 
-## Adding a new Remote
+## Adding a new Remote Module
 
 1. npm create vite@latest     //-->  !!! Choose React and TypeScript !!!
 2. cd remote4
@@ -47,7 +47,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
 )
 ~~~
 
-8. Config Module Federation. Define a new federation.config.js:
+8. Config Module Federation. Define a new federation.config.js in a folder: module-federation in the Remote Module:
 ~~~
 const { withNativeFederation, shareAll } = require('@softarc/native-federation/build');
 
@@ -98,7 +98,34 @@ export default defineConfig(async ({ command }) => ({
 }));
 ~~~
 
-10. Change the package.json in the root of the project for building en preview the new App
+
+
+## Change Host manifest files
+
+Add your new Remote app to the 'assets/manifest-files' in your Host - app.
+For example adapt the assets/manifest.local.json
+
+~~~
+
+{
+    "remote": "http://localhost:4174/remoteEntry.json",
+    "remote4": "http://localhost:4175/remoteEntry.json"
+}
+
+~~~
+
+10. load your new RemoteModule in the App.tsx
+
+~~~
+export default () => {
+	const Remote = React.lazy(
+		async () => await loadRemoteModule('remote4', './remote-app4')
+	);
+
+~~~
+
+11. Adapt the package.json in the root of the project for building en preview the new Microfrontend App. 
+Add the added Remote module in the build and preview step!
 
 ~~~
 "scripts": {
@@ -116,36 +143,4 @@ export default defineConfig(async ({ command }) => ({
 	},
 ~~~
 
-
-11. change all contents of App.tsx
-
-
-## Change Host
-
-Add your new Remote app to the main.tsx in your Host - app
-
-~~~
-import { initFederation } from '@softarc/native-federation';
-
-(async () => {
-	await initFederation({
-		remote: 'http://localhost:4174/remoteEntry.json',
-		remote4: 'http://localhost:4175/remoteEntry.json',
-	});
-
-	await import('./bootstrap');
-})();
-~~~
-
-load your RemoteModule in tje App.tsx
-
-~~~
-export default () => {
-	const Remote = React.lazy(
-		async () => await loadRemoteModule('remote4', './remote-app4')
-	);
-
-~~~
-
-Change your build-scripts in your package.json
 
